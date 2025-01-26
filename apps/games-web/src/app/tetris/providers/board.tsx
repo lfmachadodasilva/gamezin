@@ -70,6 +70,8 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
         }),
       };
 
+      // console.log(board);
+
       if (colid(board, current, nextTetrominoe)) {
         setCurrent(null);
         setPrevious(null);

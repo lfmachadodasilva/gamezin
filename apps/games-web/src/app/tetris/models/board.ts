@@ -43,11 +43,9 @@ export const colid = (
         return true;
       }
 
-      // console.log(board[rowIndex][colIndex]);
-
       if (
-        board[rowIndex][colIndex].type !== TetrisCellEnum.Empty ||
-        board[rowIndex][colIndex].type !== TetrisCellEnum.E
+        board[cell.row][cell.col].type !== TetrisCellEnum.Empty ||
+        board[cell.row][cell.col].type !== TetrisCellEnum.E
       ) {
         // cell ocupied
         return true;
