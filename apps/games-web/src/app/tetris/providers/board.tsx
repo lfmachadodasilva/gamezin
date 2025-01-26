@@ -9,6 +9,7 @@ import { colid, defaultTetrisBoard, TetrisBoard } from '../models/board';
 import { TetrisCellEnum } from '../models/cell';
 import {
   applyTetrominoe,
+  createRandomTetrominoe,
   createTetrominoe,
   Tetrominoe,
 } from '../models/tetrominoe';
@@ -34,11 +35,13 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   const [pause, setPause] = useState<boolean>(false);
 
   const dropNewTetrominoe = () => {
-    setCurrent(createTetrominoe(TetrisCellEnum.L, { row: 0, col: 4 }));
+    // setCurrent(createTetrominoe(TetrisCellEnum.L, { row: 0, col: 4 }));
+    setCurrent(createRandomTetrominoe());
   };
 
   useEffect(() => {
-    setCurrent(createTetrominoe(TetrisCellEnum.L, { row: 0, col: 4 }));
+    // setCurrent(createTetrominoe(TetrisCellEnum.L, { row: 0, col: 4 }));
+    setCurrent(createRandomTetrominoe());
   }, []);
 
   useEffect(() => {
@@ -64,7 +67,7 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
     setTimeout(() => {
       const nextTetrominoe = {
-        ...createTetrominoe(current.type, {
+        ...createTetrominoe(current.type, current.format, {
           row: current.position[0][0].row + 1,
           col: current.position[0][0].col,
         }),
