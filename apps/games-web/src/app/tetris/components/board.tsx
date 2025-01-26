@@ -2,12 +2,18 @@ import { TetrisCellColor } from '../models/cell';
 import { useTetrisBoard } from '../providers/board';
 
 export const Board = () => {
-  const { board } = useTetrisBoard();
+  const { board, setPause } = useTetrisBoard();
 
-  console.log('board component', { board });
+  //   console.log('board component', { board });
+  const handlePause = () => {
+    setPause((pause) => !pause);
+  };
 
   return (
     <>
+      <button onClick={handlePause}>Pause</button>
+      <br></br>
+      <br></br>
       {board?.map((rows, indexRow) => (
         <div key={`board-row-${indexRow}`} style={{ display: 'flex' }}>
           {rows.map((cell, indexCol) => (
@@ -19,11 +25,11 @@ export const Board = () => {
                 borderLeft: indexCol === 0 ? '1px solid black' : 'none',
                 borderRight: '1px solid black',
                 backgroundColor: TetrisCellColor[cell.type],
-                width: '70px',
+                width: '20px',
                 height: '20px',
               }}
             >
-              {cell.type}
+              {/* {cell.type} */}
             </div>
           ))}
         </div>

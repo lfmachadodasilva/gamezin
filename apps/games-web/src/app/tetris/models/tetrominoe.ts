@@ -1,3 +1,4 @@
+import { TetrisBoard } from './board';
 import { TetrisCellEnum, TetrisCellL1 } from './cell';
 
 export interface Tetrominoe {
@@ -14,6 +15,27 @@ export const defaultTetrominoe: Tetrominoe = {
     })),
   ),
   type: TetrisCellEnum.Empty,
+};
+
+export const applyTetrominoe = (
+  board: TetrisBoard,
+  tetrominoe: Tetrominoe,
+  type?: TetrisCellEnum,
+) => {
+  var boardCopy: TetrisBoard = JSON.parse(JSON.stringify(board));
+
+  tetrominoe.position.forEach((row) => {
+    row.forEach((cell) => {
+      const boardRow = boardCopy[cell.row];
+      if (boardRow) {
+        const boardCol = boardRow[cell.col];
+        if (boardCol) {
+          boardCol.type = type ?? cell.type;
+        }
+      }
+    });
+  });
+  return boardCopy;
 };
 
 export const createTetrominoe = (
