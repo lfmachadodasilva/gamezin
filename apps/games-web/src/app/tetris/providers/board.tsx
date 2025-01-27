@@ -11,6 +11,7 @@ const TetrisBoardContext = createContext<{
   board?: TetrisBoard;
   pause: boolean;
   setPause: React.Dispatch<React.SetStateAction<boolean>>;
+  next?: Tetrominoe | null;
 }>({
   pause: false,
   setPause: () => {
@@ -21,14 +22,15 @@ const TetrisBoardContext = createContext<{
 export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   const [board, setBoard] = useState<TetrisBoard>(
     populateArray(BOARD_ROWS, BOARD_COLUMNS, {
-      type: TetrisCellShape.E,
-      type2: TetrisCellType.Empty,
+      shape: TetrisCellShape.E,
+      type: TetrisCellType.Empty,
     }),
   );
   const [shape, setShape] = useState<{
     previous: Tetrominoe | null;
     current: Tetrominoe | null;
   }>({ previous: null, current: createRandomTetrominoe() });
+  const [next, setNext] = useState<Tetrominoe | null>(createRandomTetrominoe());
   const [pause, setPause] = useState<boolean>(false);
 
   useEffect(() => {
@@ -58,14 +60,15 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
     if (colid(board, shape.current, nextTetrominoe)) {
       setBoard(fixedAll(board));
-      setShape({ previous: null, current: createRandomTetrominoe() });
+      setShape({ previous: null, current: next });
+      setNext(createRandomTetrominoe());
     } else {
       setShape((value) => ({ previous: value.current, current: nextTetrominoe }));
     }
   }, GAME_TIME);
 
   return (
-    <TetrisBoardContext.Provider value={{ board, pause, setPause }}>
+    <TetrisBoardContext.Provider value={{ board, pause, setPause, next }}>
       {children}
     </TetrisBoardContext.Provider>
   );

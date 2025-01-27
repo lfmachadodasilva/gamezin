@@ -1,5 +1,6 @@
 import { TetrisCellColor } from '../models/cell';
 import { useTetrisBoard } from '../providers/board';
+import { Next } from './next';
 
 export const Board = () => {
   const { board, setPause } = useTetrisBoard();
@@ -13,6 +14,7 @@ export const Board = () => {
       <button onClick={handlePause}>Pause</button>
       <br></br>
       <br></br>
+
       {board?.map((rows, indexRow) => (
         <div key={`board-row-${indexRow}`} style={{ display: 'flex' }}>
           {rows.map((cell, indexCol) => (
@@ -33,6 +35,7 @@ export const Board = () => {
           ))}
         </div>
       ))}
+      <Next />
     </>
   );
 };

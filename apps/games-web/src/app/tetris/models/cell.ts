@@ -75,6 +75,22 @@ export const TetrisCellZ4 = [
   [TetrisCellShape.Z, TetrisCellShape.E],
 ];
 export const TetrisCellD = [[TetrisCellShape.D]];
+
+export const TetrisCells = [
+  TetrisCellL1,
+  TetrisCellL2,
+  TetrisCellL3,
+  TetrisCellL4,
+  TetrisCellO,
+  TetrisCellI1,
+  TetrisCellI2,
+  TetrisCellZ1,
+  TetrisCellZ2,
+  TetrisCellZ3,
+  TetrisCellZ4,
+  TetrisCellD,
+];
+
 export const TetrisCellEmpty = [
   [TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E],
   [TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E],
