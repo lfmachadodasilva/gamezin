@@ -3,6 +3,12 @@ export enum TetrisCellType {
   E = 'empty',
 }
 
+export enum TetrisCellType2 {
+  Empty = 'empty',
+  Fixed = 'fixed',
+  Temp = 'temporary',
+}
+
 export const TetrisCellColor = {
   L: 'blue',
   E: 'white',
@@ -42,4 +48,5 @@ export const TetrisCellEmpty = [
 
 export interface TetrisCell {
   type: TetrisCellType;
+  type2: TetrisCellType2;
 }

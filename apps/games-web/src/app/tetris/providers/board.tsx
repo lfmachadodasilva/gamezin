@@ -5,17 +5,18 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { colid, TetrisBoard } from '../models/board';
-import { TetrisCellType } from '../models/cell';
+import { TetrisBoard } from '../models/board';
+import { TetrisCellType, TetrisCellType2 } from '../models/cell';
 import {
   applyTetrominoe,
   createRandomTetrominoe,
   createTetrominoe,
   Tetrominoe,
 } from '../models/tetrominoe';
-import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../constants';
+import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
 import { populateArray } from '../utils/common';
 import { useInterval } from '../hooks/useInterval';
+import { colid, fixedAll } from '../utils/boardFuncs';
 
 const TetrisBoardContext = createContext<{
   board?: TetrisBoard;
@@ -33,7 +34,10 @@ const TetrisBoardContext = createContext<{
 
 export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   const [board, setBoard] = useState<TetrisBoard>(
-    populateArray(BOARD_ROWS, BOARD_COLUMNS, { type: TetrisCellType.E }),
+    populateArray(BOARD_ROWS, BOARD_COLUMNS, {
+      type: TetrisCellType.E,
+      type2: TetrisCellType2.Empty,
+    }),
   );
   const [current, setCurrent] = useState<Tetrominoe | null>(
     createRandomTetrominoe(),
@@ -72,6 +76,7 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
     if (colid(board, current, nextTetrominoe)) {
       setPrevious(null);
+      // setBoard(fixedAll(board));
       setCurrent(createRandomTetrominoe());
     } else {
       setPrevious(current);
