@@ -1,4 +1,4 @@
-import { BOARD_ROWS } from './constants';
+import { BOARD_COLUMNS, BOARD_ROWS } from './constants';
 import { TetrisBoard } from '../models/board';
 import { TetrisCellShape, TetrisCellType } from '../models/cell';
 import { createTetrominoe, Tetrominoe } from '../models/tetrominoe';
@@ -28,6 +28,11 @@ export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe)
         return true;
       }
 
+      if (cell.col < 0 || cell.col >= BOARD_COLUMNS) {
+        // out of column border
+        return true;
+      }
+
       const cellRow = board[cell.row];
       if (cellRow) {
         const cellCol = cellRow[cell.col];
@@ -53,4 +58,16 @@ export const dropping = (shape: Tetrominoe): Tetrominoe =>
   createTetrominoe(shape.type, shape.format, {
     row: shape.position[0][0].row + 1,
     col: shape.position[0][0].col,
+  });
+
+export const moveToRight = (shape: Tetrominoe): Tetrominoe =>
+  createTetrominoe(shape.type, shape.format, {
+    row: shape.position[0][0].row,
+    col: shape.position[0][0].col + 1,
+  });
+
+export const moveToLeft = (shape: Tetrominoe): Tetrominoe =>
+  createTetrominoe(shape.type, shape.format, {
+    row: shape.position[0][0].row,
+    col: shape.position[0][0].col - 1,
   });

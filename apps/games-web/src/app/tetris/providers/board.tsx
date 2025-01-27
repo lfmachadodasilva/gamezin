@@ -5,7 +5,7 @@ import { applyTetrominoe, createRandomTetrominoe, Tetrominoe } from '../models/t
 import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
 import { populateArray } from '../utils/common';
 import { useInterval } from '../hooks/useInterval';
-import { colid, dropping, fixedAll, gameOver } from '../utils/boardFuncs';
+import { colid, dropping, fixedAll, gameOver, moveToLeft, moveToRight } from '../utils/boardFuncs';
 
 const TetrisBoardContext = createContext<{
   board?: TetrisBoard;
@@ -40,13 +40,33 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       console.log(e);
+
+      if (!shape.current) {
+        return;
+      }
+      const nextTetrominoe =
+        e.code === 'ArrowLeft'
+          ? moveToLeft(shape.current)
+          : e.code === 'ArrowRight'
+            ? moveToRight(shape.current)
+            : e.code === 'ArrowDown'
+              ? dropping(shape.current)
+              : null;
+
+      if (!nextTetrominoe) {
+        return;
+      }
+
+      if (!colid(board, shape.current, nextTetrominoe)) {
+        setShape((value) => ({ previous: value.current, current: nextTetrominoe }));
+      }
     };
     document.addEventListener('keyup', handleKeyDown);
 
     return () => {
       document.removeEventListener('keyup', handleKeyDown);
     };
-  }, []);
+  }, [shape, board, next]);
 
   useEffect(() => {
     if (!shape.current) {
