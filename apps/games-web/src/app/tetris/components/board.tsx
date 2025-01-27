@@ -3,7 +3,7 @@ import { useTetrisBoard } from '../providers/board';
 import { Next } from './next';
 
 export const Board = () => {
-  const { board, setPause } = useTetrisBoard();
+  const { board, setPause, restart } = useTetrisBoard();
 
   const handlePause = () => {
     setPause((pause) => !pause);
@@ -12,6 +12,7 @@ export const Board = () => {
   return (
     <>
       <button onClick={handlePause}>Pause</button>
+      <button onClick={restart}>Restart</button>
       <br></br>
       <br></br>
 

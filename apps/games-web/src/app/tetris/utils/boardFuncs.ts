@@ -13,7 +13,7 @@ export const fixedAll = (board: TetrisBoard): TetrisBoard =>
     }),
   );
 
-export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe) => {
+export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe): boolean => {
   for (let rowIndex = 0; rowIndex < next.position.length; rowIndex++) {
     for (let colIndex = 0; colIndex < next.position[rowIndex].length; colIndex++) {
       const cell = next.position[rowIndex][colIndex];
@@ -45,6 +45,9 @@ export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe)
 
   return false;
 };
+
+export const gameOver = (shape: Tetrominoe): boolean =>
+  shape.position.some((row) => row.some((cell) => cell.row < 0));
 
 export const dropping = (shape: Tetrominoe): Tetrominoe =>
   createTetrominoe(shape.type, shape.format, {

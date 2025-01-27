@@ -101,8 +101,8 @@ export const createTetrominoe = (
 
 export const createRandomTetrominoe = () => {
   const type = getRandomEnumValue(TetrisCellShape, TetrisCellShape.E);
-  const from = { row: 0, col: 4 };
   const format = randomIntFromInterval(1, 4);
+  const from = { row: -4, col: 4 };
 
   return createTetrominoe(type, format, from);
 };
