@@ -50,8 +50,6 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log(e);
-
       if (!shape.current) {
         return;
       }
