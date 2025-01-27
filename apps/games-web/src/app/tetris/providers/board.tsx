@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { TetrisBoard } from '../models/board';
 import { TetrisCellType, TetrisCellType2 } from '../models/cell';
 import {
@@ -39,9 +33,7 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
       type2: TetrisCellType2.Empty,
     }),
   );
-  const [current, setCurrent] = useState<Tetrominoe | null>(
-    createRandomTetrominoe(),
-  );
+  const [current, setCurrent] = useState<Tetrominoe | null>(createRandomTetrominoe());
   const [previous, setPrevious] = useState<Tetrominoe | null>();
   const [next, setNext] = useState<Tetrominoe | null>();
   const [pause, setPause] = useState<boolean>(false);
@@ -55,10 +47,8 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
       if (previous) {
         board = applyTetrominoe(board, previous, TetrisCellType.E);
       }
-      if (current) {
-        board = applyTetrominoe(board, current);
-      }
-      return board;
+
+      return applyTetrominoe(board, current, undefined, TetrisCellType2.Temp);
     });
   }, [current, previous]);
 
@@ -76,7 +66,7 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
     if (colid(board, current, nextTetrominoe)) {
       setPrevious(null);
-      // setBoard(fixedAll(board));
+      setBoard(fixedAll(board));
       setCurrent(createRandomTetrominoe());
     } else {
       setPrevious(current);
@@ -85,9 +75,7 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   }, GAME_TIME);
 
   return (
-    <TetrisBoardContext.Provider
-      value={{ board, current, previous, next, pause, setPause }}
-    >
+    <TetrisBoardContext.Provider value={{ board, current, previous, next, pause, setPause }}>
       {children}
     </TetrisBoardContext.Provider>
   );
@@ -97,9 +85,7 @@ export const useTetrisBoard = () => {
   const context = useContext(TetrisBoardContext);
 
   if (!context) {
-    throw new Error(
-      'useTetrisBoard must be used within an TetrisBoardProvider',
-    );
+    throw new Error('useTetrisBoard must be used within an TetrisBoardProvider');
   }
 
   return context;

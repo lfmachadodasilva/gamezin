@@ -6,6 +6,7 @@ import {
   TetrisCellL2,
   TetrisCellL3,
   TetrisCellL4,
+  TetrisCellType2,
 } from './cell';
 
 export interface Tetrominoe {
@@ -18,16 +19,20 @@ export const applyTetrominoe = (
   board: TetrisBoard,
   tetrominoe: Tetrominoe,
   type?: TetrisCellType,
+  type2?: TetrisCellType2,
 ) => {
   const boardCopy: TetrisBoard = deepClone(board);
 
   tetrominoe.position.forEach((row) => {
     row.forEach((cell) => {
-      const boardRow = boardCopy[cell.row];
-      if (boardRow) {
-        const boardCol = boardRow[cell.col];
-        if (boardCol) {
-          boardCol.type = type ?? cell.type;
+      if (cell.type !== TetrisCellType.E) {
+        const boardRow = boardCopy[cell.row];
+        if (boardRow) {
+          const boardCol = boardRow[cell.col];
+          if (boardCol) {
+            boardCol.type = type ?? cell.type;
+            boardCol.type2 = type2 ?? boardCol.type2;
+          }
         }
       }
     });
