@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react';
 import { colid, TetrisBoard } from '../models/board';
-import { TetrisCellEnum } from '../models/cell';
+import { TetrisCellType } from '../models/cell';
 import {
   applyTetrominoe,
   createRandomTetrominoe,
@@ -15,6 +15,7 @@ import {
 } from '../models/tetrominoe';
 import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../constants';
 import { populateArray } from '../utils/common';
+import { useInterval } from '../hooks/useInterval';
 
 const TetrisBoardContext = createContext<{
   board?: TetrisBoard;
@@ -32,22 +33,14 @@ const TetrisBoardContext = createContext<{
 
 export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   const [board, setBoard] = useState<TetrisBoard>(
-    populateArray(BOARD_ROWS, BOARD_COLUMNS, { type: TetrisCellEnum.E }),
+    populateArray(BOARD_ROWS, BOARD_COLUMNS, { type: TetrisCellType.E }),
   );
-  const [current, setCurrent] = useState<Tetrominoe | null>();
+  const [current, setCurrent] = useState<Tetrominoe | null>(
+    createRandomTetrominoe(),
+  );
   const [previous, setPrevious] = useState<Tetrominoe | null>();
   const [next, setNext] = useState<Tetrominoe | null>();
   const [pause, setPause] = useState<boolean>(false);
-
-  const dropNewTetrominoe = () => {
-    // setCurrent(createTetrominoe(TetrisCellEnum.L, { row: 0, col: 4 }));
-    setCurrent(createRandomTetrominoe());
-  };
-
-  useEffect(() => {
-    // setCurrent(createTetrominoe(TetrisCellEnum.L, { row: 0, col: 4 }));
-    setCurrent(createRandomTetrominoe());
-  }, []);
 
   useEffect(() => {
     if (!current) {
@@ -56,7 +49,7 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
     setBoard((board) => {
       if (previous) {
-        board = applyTetrominoe(board, previous, TetrisCellEnum.E);
+        board = applyTetrominoe(board, previous, TetrisCellType.E);
       }
       if (current) {
         board = applyTetrominoe(board, current);
@@ -65,31 +58,26 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
     });
   }, [current, previous]);
 
-  useEffect(() => {
+  useInterval(() => {
     if (!current || pause) {
       return;
     }
 
-    setTimeout(() => {
-      const nextTetrominoe = {
-        ...createTetrominoe(current.type, current.format, {
-          row: current.position[0][0].row + 1,
-          col: current.position[0][0].col,
-        }),
-      };
+    const nextTetrominoe = {
+      ...createTetrominoe(current.type, current.format, {
+        row: current.position[0][0].row + 1,
+        col: current.position[0][0].col,
+      }),
+    };
 
-      // console.log(board);
-
-      if (colid(board, current, nextTetrominoe)) {
-        setCurrent(null);
-        setPrevious(null);
-        dropNewTetrominoe();
-      } else {
-        setPrevious(current);
-        setCurrent(nextTetrominoe);
-      }
-    }, GAME_TIME);
-  }, [current, pause]);
+    if (colid(board, current, nextTetrominoe)) {
+      setPrevious(null);
+      setCurrent(createRandomTetrominoe());
+    } else {
+      setPrevious(current);
+      setCurrent(nextTetrominoe);
+    }
+  }, GAME_TIME);
 
   return (
     <TetrisBoardContext.Provider

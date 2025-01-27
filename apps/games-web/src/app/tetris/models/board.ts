@@ -1,5 +1,5 @@
 import { BOARD_COLUMNS, BOARD_ROWS } from '../constants';
-import { TetrisCell, TetrisCellEnum } from './cell';
+import { TetrisCell, TetrisCellType } from './cell';
 import { applyTetrominoe, Tetrominoe } from './tetrominoe';
 
 export type TetrisBoard = TetrisCell[][];
@@ -10,7 +10,7 @@ export const colid = (
   next: Tetrominoe,
 ) => {
   // remove current position
-  board = applyTetrominoe(board, current, TetrisCellEnum.E);
+  board = applyTetrominoe(board, current, TetrisCellType.E);
 
   for (let rowIndex = 0; rowIndex < next.position.length; rowIndex++) {
     for (
@@ -20,7 +20,7 @@ export const colid = (
     ) {
       const cell = next.position[rowIndex][colIndex];
 
-      if (cell.type === TetrisCellEnum.E) {
+      if (cell.type === TetrisCellType.E) {
         // empty space
         continue;
       }
@@ -35,7 +35,7 @@ export const colid = (
         return true;
       }
 
-      if (board[cell.row][cell.col].type !== TetrisCellEnum.E) {
+      if (board[cell.row][cell.col].type !== TetrisCellType.E) {
         // cell ocupied
         return true;
       }

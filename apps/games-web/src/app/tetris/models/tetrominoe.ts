@@ -1,7 +1,7 @@
 import { deepClone, randomIntFromInterval } from '../utils/common';
 import { TetrisBoard } from './board';
 import {
-  TetrisCellEnum,
+  TetrisCellType,
   TetrisCellL1,
   TetrisCellL2,
   TetrisCellL3,
@@ -9,15 +9,15 @@ import {
 } from './cell';
 
 export interface Tetrominoe {
-  position: { row: number; col: number; type: TetrisCellEnum }[][];
-  type: TetrisCellEnum;
+  position: { row: number; col: number; type: TetrisCellType }[][];
+  type: TetrisCellType;
   format: number;
 }
 
 export const applyTetrominoe = (
   board: TetrisBoard,
   tetrominoe: Tetrominoe,
-  type?: TetrisCellEnum,
+  type?: TetrisCellType,
 ) => {
   const boardCopy: TetrisBoard = deepClone(board);
 
@@ -36,12 +36,12 @@ export const applyTetrominoe = (
 };
 
 export const createTetrominoe = (
-  type: TetrisCellEnum,
+  type: TetrisCellType,
   format: number,
   from: { row: number; col: number },
 ) => {
-  let cell: TetrisCellEnum[][] = [];
-  if (type === TetrisCellEnum.L) {
+  let cell: TetrisCellType[][] = [];
+  if (type === TetrisCellType.L) {
     if (format === 1) {
       cell = TetrisCellL1;
     } else if (format === 2) {
@@ -67,7 +67,7 @@ export const createTetrominoe = (
 };
 
 export const createRandomTetrominoe = () => {
-  const type = TetrisCellEnum.L;
+  const type = TetrisCellType.L;
   const from = { row: 0, col: 4 };
 
   const format = randomIntFromInterval(1, 4);
