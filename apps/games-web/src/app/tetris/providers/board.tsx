@@ -1,4 +1,14 @@
-import { createContext, ReactNode, use, useCallback, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  TouchEventHandler,
+  use,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { TetrisBoard } from '../models/board';
 import { TetrisCellShape, TetrisCellType } from '../models/cell';
 import { applyTetrominoe, createRandomTetrominoe, Tetrominoe } from '../models/tetrominoe';
@@ -24,6 +34,7 @@ const TetrisBoardContext = createContext<{
 });
 
 export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
+  const touchStartPosition = useRef<{ x: number; y: number } | null>(null);
   const [board, setBoard] = useState<TetrisBoard>(
     populateArray(BOARD_ROWS, BOARD_COLUMNS, {
       shape: TetrisCellShape.E,
@@ -117,10 +128,66 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
     setNext(createRandomTetrominoe());
   }, []);
 
+  const handleTouchStart = (event: React.TouchEvent) => {
+    const touch = event.touches[0];
+    touchStartPosition.current = { x: touch.clientX, y: touch.clientY }; // Record initial touch position
+  };
+
+  const handleTouchMove = useCallback(
+    (event: React.TouchEvent) => {
+      if (!touchStartPosition.current) {
+        return;
+      }
+      if (!shape.current) {
+        return;
+      }
+
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - touchStartPosition.current.x;
+      const deltaY = touch.clientY - touchStartPosition.current.y;
+
+      const moveThreshold = 20; // Pixels to trigger movement
+
+      if (Math.abs(deltaX) > moveThreshold) {
+        // Horizontal movement (left/right)
+        const directionX = deltaX > 0 ? 1 : -1;
+
+        const nextTetrominoe =
+          directionX === 1 ? moveToRight(shape.current) : moveToLeft(shape.current);
+        if (!colid(board, shape.current, nextTetrominoe)) {
+          setShape((value) => ({ previous: value.current, current: nextTetrominoe }));
+        }
+
+        // Reset start X position to avoid continuous triggering
+        touchStartPosition.current.x = touch.clientX;
+      } else if (Math.abs(deltaY) > moveThreshold) {
+        // Vertical movement (down)
+        const directionY = deltaY > 0 ? 1 : 0; // Only move down
+
+        if (directionY) {
+          const nextTetrominoe = dropping(shape.current);
+          if (!colid(board, shape.current, nextTetrominoe)) {
+            setShape((value) => ({ previous: value.current, current: nextTetrominoe }));
+          }
+
+          // Reset start Y position to avoid continuous triggering
+          touchStartPosition.current.y = touch.clientY;
+        }
+      }
+    },
+    [board, shape],
+  );
+
+  const handleTouchEnd = () => {
+    touchStartPosition.current = null; // Reset touch tracking
+  };
+
   return (
-    <TetrisBoardContext.Provider value={{ board, pause, setPause, next, restart: handleRestart }}>
-      {children}
-    </TetrisBoardContext.Provider>
+    <span onTouchMove={handleTouchMove} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+      <TetrisBoardContext.Provider value={{ board, pause, setPause, next, restart: handleRestart }}>
+        {children}
+      </TetrisBoardContext.Provider>
+    </span>
   );
 };
 
