@@ -14,9 +14,6 @@ import { colid, fixedAll } from '../utils/boardFuncs';
 
 const TetrisBoardContext = createContext<{
   board?: TetrisBoard;
-  current?: Tetrominoe | null;
-  previous?: Tetrominoe | null;
-  next?: Tetrominoe | null;
   pause: boolean;
   setPause: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
@@ -33,49 +30,52 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
       type2: TetrisCellType2.Empty,
     }),
   );
-  const [current, setCurrent] = useState<Tetrominoe | null>(createRandomTetrominoe());
-  const [previous, setPrevious] = useState<Tetrominoe | null>();
-  const [next, setNext] = useState<Tetrominoe | null>();
+  const [shape, setShape] = useState<{
+    previous: Tetrominoe | null;
+    current: Tetrominoe | null;
+  }>({ previous: null, current: createRandomTetrominoe() });
   const [pause, setPause] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!current) {
+    if (!shape.current) {
       return;
     }
 
     setBoard((board) => {
-      if (previous) {
-        board = applyTetrominoe(board, previous, TetrisCellType.E);
+      if (shape.previous) {
+        board = applyTetrominoe(board, shape.previous, TetrisCellType.E);
       }
 
-      return applyTetrominoe(board, current, undefined, TetrisCellType2.Temp);
+      if (shape.current) {
+        board = applyTetrominoe(board, shape.current, undefined, TetrisCellType2.Temp);
+      }
+
+      return board;
     });
-  }, [current, previous]);
+  }, [shape]);
 
   useInterval(() => {
-    if (!current || pause) {
+    if (!shape.current || pause) {
       return;
     }
 
     const nextTetrominoe = {
-      ...createTetrominoe(current.type, current.format, {
-        row: current.position[0][0].row + 1,
-        col: current.position[0][0].col,
+      ...createTetrominoe(shape.current.type, shape.current.format, {
+        row: shape.current.position[0][0].row + 1,
+        col: shape.current.position[0][0].col,
       }),
     };
 
-    if (colid(board, current, nextTetrominoe)) {
-      setPrevious(null);
+    if (colid(board, shape.current, nextTetrominoe)) {
       setBoard(fixedAll(board));
-      setCurrent(createRandomTetrominoe());
+      setShape((value) => ({ previous: null, current: createRandomTetrominoe() }));
     } else {
-      setPrevious(current);
-      setCurrent(nextTetrominoe);
+      setShape((value) => ({ previous: value.current, current: nextTetrominoe }));
     }
   }, GAME_TIME);
 
   return (
-    <TetrisBoardContext.Provider value={{ board, current, previous, next, pause, setPause }}>
+    <TetrisBoardContext.Provider value={{ board, pause, setPause }}>
       {children}
     </TetrisBoardContext.Provider>
   );
