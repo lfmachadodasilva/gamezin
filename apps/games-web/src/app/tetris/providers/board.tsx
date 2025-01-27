@@ -1,12 +1,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { TetrisBoard } from '../models/board';
 import { TetrisCellType, TetrisCellType2 } from '../models/cell';
-import {
-  applyTetrominoe,
-  createRandomTetrominoe,
-  createTetrominoe,
-  Tetrominoe,
-} from '../models/tetrominoe';
+import { applyTetrominoe, createRandomTetrominoe, Tetrominoe } from '../models/tetrominoe';
 import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
 import { populateArray } from '../utils/common';
 import { useInterval } from '../hooks/useInterval';

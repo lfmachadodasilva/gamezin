@@ -1,4 +1,4 @@
-import { deepClone, randomIntFromInterval } from '../utils/common';
+import { deepClone, getRandomEnumValue, randomIntFromInterval } from '../utils/common';
 import { TetrisBoard } from './board';
 import {
   TetrisCellType,
@@ -7,6 +7,14 @@ import {
   TetrisCellL3,
   TetrisCellL4,
   TetrisCellType2,
+  TetrisCellO,
+  TetrisCellI1,
+  TetrisCellI2,
+  TetrisCellZ1,
+  TetrisCellZ2,
+  TetrisCellZ3,
+  TetrisCellZ4,
+  TetrisCellD,
 } from './cell';
 
 export interface Tetrominoe {
@@ -56,6 +64,26 @@ export const createTetrominoe = (
     } else if (format === 4) {
       cell = TetrisCellL4;
     }
+  } else if (type === TetrisCellType.O) {
+    cell = TetrisCellO;
+  } else if (type === TetrisCellType.I) {
+    if (format === 1) {
+      cell = TetrisCellI1;
+    } else {
+      cell = TetrisCellI2;
+    }
+  } else if (type === TetrisCellType.Z) {
+    if (format === 1) {
+      cell = TetrisCellZ1;
+    } else if (format === 2) {
+      cell = TetrisCellZ2;
+    } else if (format === 3) {
+      cell = TetrisCellZ3;
+    } else if (format === 4) {
+      cell = TetrisCellZ4;
+    }
+  } else if (type === TetrisCellType.D) {
+    cell = TetrisCellD;
   }
 
   return {
@@ -72,9 +100,8 @@ export const createTetrominoe = (
 };
 
 export const createRandomTetrominoe = () => {
-  const type = TetrisCellType.L;
+  const type = getRandomEnumValue(TetrisCellType, TetrisCellType.E);
   const from = { row: 0, col: 4 };
-
   const format = randomIntFromInterval(1, 4);
 
   return createTetrominoe(type, format, from);
