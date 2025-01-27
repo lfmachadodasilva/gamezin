@@ -10,7 +10,7 @@ import {
 import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
 import { populateArray } from '../utils/common';
 import { useInterval } from '../hooks/useInterval';
-import { colid, fixedAll } from '../utils/boardFuncs';
+import { colid, dropping, fixedAll } from '../utils/boardFuncs';
 
 const TetrisBoardContext = createContext<{
   board?: TetrisBoard;
@@ -59,16 +59,11 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
       return;
     }
 
-    const nextTetrominoe = {
-      ...createTetrominoe(shape.current.type, shape.current.format, {
-        row: shape.current.position[0][0].row + 1,
-        col: shape.current.position[0][0].col,
-      }),
-    };
+    const nextTetrominoe = dropping(shape.current);
 
     if (colid(board, shape.current, nextTetrominoe)) {
       setBoard(fixedAll(board));
-      setShape((value) => ({ previous: null, current: createRandomTetrominoe() }));
+      setShape({ previous: null, current: createRandomTetrominoe() });
     } else {
       setShape((value) => ({ previous: value.current, current: nextTetrominoe }));
     }

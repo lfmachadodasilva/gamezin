@@ -1,7 +1,7 @@
 import { BOARD_ROWS } from './constants';
 import { TetrisBoard } from '../models/board';
 import { TetrisCellType, TetrisCellType2 } from '../models/cell';
-import { Tetrominoe } from '../models/tetrominoe';
+import { createTetrominoe, Tetrominoe } from '../models/tetrominoe';
 
 export const fixedAll = (board: TetrisBoard): TetrisBoard =>
   board.map((row) =>
@@ -45,3 +45,9 @@ export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe)
 
   return false;
 };
+
+export const dropping = (shape: Tetrominoe): Tetrominoe =>
+  createTetrominoe(shape.type, shape.format, {
+    row: shape.position[0][0].row + 1,
+    col: shape.position[0][0].col,
+  });
