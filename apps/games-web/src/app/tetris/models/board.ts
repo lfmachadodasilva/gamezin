@@ -4,21 +4,13 @@ import { applyTetrominoe, Tetrominoe } from './tetrominoe';
 
 export type TetrisBoard = TetrisCell[][];
 
-export const defaultTetrisBoard: TetrisBoard = Array.from(
-  { length: BOARD_ROWS },
-  () =>
-    Array.from({ length: BOARD_COLUMNS }, () => ({
-      type: TetrisCellEnum.Empty,
-    })),
-);
-
 export const colid = (
   board: TetrisBoard,
   current: Tetrominoe,
   next: Tetrominoe,
 ) => {
   // remove current position
-  board = applyTetrominoe(board, current, TetrisCellEnum.Empty);
+  board = applyTetrominoe(board, current, TetrisCellEnum.E);
 
   for (let rowIndex = 0; rowIndex < next.position.length; rowIndex++) {
     for (
@@ -28,7 +20,7 @@ export const colid = (
     ) {
       const cell = next.position[rowIndex][colIndex];
 
-      if (cell.type === TetrisCellEnum.Empty) {
+      if (cell.type === TetrisCellEnum.E) {
         // empty space
         continue;
       }
@@ -43,10 +35,7 @@ export const colid = (
         return true;
       }
 
-      if (
-        board[cell.row][cell.col].type !== TetrisCellEnum.Empty ||
-        board[cell.row][cell.col].type !== TetrisCellEnum.E
-      ) {
+      if (board[cell.row][cell.col].type !== TetrisCellEnum.E) {
         // cell ocupied
         return true;
       }

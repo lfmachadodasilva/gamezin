@@ -1,7 +1,6 @@
 export enum TetrisCellEnum {
   L = 'L',
   E = 'empty',
-  Empty = 'empty',
 }
 
 export const TetrisCellColor = {

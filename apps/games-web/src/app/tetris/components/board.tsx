@@ -4,7 +4,6 @@ import { useTetrisBoard } from '../providers/board';
 export const Board = () => {
   const { board, setPause } = useTetrisBoard();
 
-  //   console.log('board component', { board });
   const handlePause = () => {
     setPause((pause) => !pause);
   };

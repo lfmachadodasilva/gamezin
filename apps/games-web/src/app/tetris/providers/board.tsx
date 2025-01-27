@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { colid, defaultTetrisBoard, TetrisBoard } from '../models/board';
+import { colid, TetrisBoard } from '../models/board';
 import { TetrisCellEnum } from '../models/cell';
 import {
   applyTetrominoe,
@@ -14,6 +14,7 @@ import {
   Tetrominoe,
 } from '../models/tetrominoe';
 import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../constants';
+import { populateArray } from '../utils/common';
 
 const TetrisBoardContext = createContext<{
   board?: TetrisBoard;
@@ -24,11 +25,15 @@ const TetrisBoardContext = createContext<{
   setPause: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   pause: false,
-  setPause: () => {},
+  setPause: () => {
+    /* no-op */
+  },
 });
 
 export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
-  const [board, setBoard] = useState<TetrisBoard>(defaultTetrisBoard);
+  const [board, setBoard] = useState<TetrisBoard>(
+    populateArray(BOARD_ROWS, BOARD_COLUMNS, { type: TetrisCellEnum.E }),
+  );
   const [current, setCurrent] = useState<Tetrominoe | null>();
   const [previous, setPrevious] = useState<Tetrominoe | null>();
   const [next, setNext] = useState<Tetrominoe | null>();
@@ -51,14 +56,14 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
     setBoard((board) => {
       if (previous) {
-        board = applyTetrominoe(board, previous, TetrisCellEnum.Empty);
+        board = applyTetrominoe(board, previous, TetrisCellEnum.E);
       }
       if (current) {
         board = applyTetrominoe(board, current);
       }
       return board;
     });
-  }, [current]);
+  }, [current, previous]);
 
   useEffect(() => {
     if (!current || pause) {

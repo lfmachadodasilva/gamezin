@@ -1,3 +1,4 @@
+import { deepClone, randomIntFromInterval } from '../utils/common';
 import { TetrisBoard } from './board';
 import {
   TetrisCellEnum,
@@ -13,24 +14,12 @@ export interface Tetrominoe {
   format: number;
 }
 
-export const defaultTetrominoe: Tetrominoe = {
-  position: Array.from({ length: 4 }, () =>
-    Array.from({ length: 4 }, () => ({
-      row: -1,
-      col: -1,
-      type: TetrisCellEnum.Empty,
-    })),
-  ),
-  type: TetrisCellEnum.Empty,
-  format: 1,
-};
-
 export const applyTetrominoe = (
   board: TetrisBoard,
   tetrominoe: Tetrominoe,
   type?: TetrisCellEnum,
 ) => {
-  var boardCopy: TetrisBoard = JSON.parse(JSON.stringify(board));
+  const boardCopy: TetrisBoard = deepClone(board);
 
   tetrominoe.position.forEach((row) => {
     row.forEach((cell) => {
@@ -81,11 +70,7 @@ export const createRandomTetrominoe = () => {
   const type = TetrisCellEnum.L;
   const from = { row: 0, col: 4 };
 
-  function randomIntFromInterval(min: number = 1, max: number = 4) {
-    // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-  const format = randomIntFromInterval();
+  const format = randomIntFromInterval(1, 4);
 
   return createTetrominoe(type, format, from);
 };
