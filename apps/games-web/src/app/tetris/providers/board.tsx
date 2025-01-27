@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { TetrisBoard } from '../models/board';
-import { TetrisCellType, TetrisCellType2 } from '../models/cell';
+import { TetrisCellShape, TetrisCellType } from '../models/cell';
 import { applyTetrominoe, createRandomTetrominoe, Tetrominoe } from '../models/tetrominoe';
 import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
 import { populateArray } from '../utils/common';
@@ -21,8 +21,8 @@ const TetrisBoardContext = createContext<{
 export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   const [board, setBoard] = useState<TetrisBoard>(
     populateArray(BOARD_ROWS, BOARD_COLUMNS, {
-      type: TetrisCellType.E,
-      type2: TetrisCellType2.Empty,
+      type: TetrisCellShape.E,
+      type2: TetrisCellType.Empty,
     }),
   );
   const [shape, setShape] = useState<{
@@ -38,11 +38,11 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
     setBoard((board) => {
       if (shape.previous) {
-        board = applyTetrominoe(board, shape.previous, TetrisCellType.E);
+        board = applyTetrominoe(board, shape.previous, TetrisCellShape.E);
       }
 
       if (shape.current) {
-        board = applyTetrominoe(board, shape.current, undefined, TetrisCellType2.Temp);
+        board = applyTetrominoe(board, shape.current, undefined, TetrisCellType.Temp);
       }
 
       return board;

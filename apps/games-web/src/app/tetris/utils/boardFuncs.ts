@@ -1,13 +1,13 @@
 import { BOARD_ROWS } from './constants';
 import { TetrisBoard } from '../models/board';
-import { TetrisCellType, TetrisCellType2 } from '../models/cell';
+import { TetrisCellShape, TetrisCellType } from '../models/cell';
 import { createTetrominoe, Tetrominoe } from '../models/tetrominoe';
 
 export const fixedAll = (board: TetrisBoard): TetrisBoard =>
   board.map((row) =>
     row.map((col) => {
-      if (col.type2 === TetrisCellType2.Temp) {
-        col.type2 = TetrisCellType2.Fixed;
+      if (col.type === TetrisCellType.Temp) {
+        col.type = TetrisCellType.Fixed;
       }
       return col;
     }),
@@ -18,7 +18,7 @@ export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe)
     for (let colIndex = 0; colIndex < next.position[rowIndex].length; colIndex++) {
       const cell = next.position[rowIndex][colIndex];
 
-      if (cell.type === TetrisCellType.E) {
+      if (cell.type === TetrisCellShape.E) {
         // empty space
         continue;
       }
@@ -34,8 +34,8 @@ export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe)
 
         if (
           cellCol &&
-          cellCol.type !== TetrisCellType.E &&
-          cellCol.type2 === TetrisCellType2.Fixed
+          cellCol.shape !== TetrisCellShape.E &&
+          cellCol.type === TetrisCellType.Fixed
         ) {
           return true;
         }

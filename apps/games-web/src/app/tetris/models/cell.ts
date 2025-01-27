@@ -1,4 +1,4 @@
-export enum TetrisCellType {
+export enum TetrisCellShape {
   L = 'L',
   O = 'O',
   I = 'I',
@@ -7,7 +7,7 @@ export enum TetrisCellType {
   E = 'empty',
 }
 
-export enum TetrisCellType2 {
+export enum TetrisCellType {
   Empty = 'empty',
   Fixed = 'fixed',
   Temp = 'temporary',
@@ -24,65 +24,65 @@ export const TetrisCellColor = {
 };
 
 export const TetrisCellL1 = [
-  [TetrisCellType.L, TetrisCellType.E],
-  [TetrisCellType.L, TetrisCellType.E],
-  [TetrisCellType.L, TetrisCellType.E],
-  [TetrisCellType.L, TetrisCellType.L],
+  [TetrisCellShape.L, TetrisCellShape.E],
+  [TetrisCellShape.L, TetrisCellShape.E],
+  [TetrisCellShape.L, TetrisCellShape.E],
+  [TetrisCellShape.L, TetrisCellShape.L],
 ];
 export const TetrisCellL2 = [
-  [TetrisCellType.E, TetrisCellType.E, TetrisCellType.E, TetrisCellType.L],
-  [TetrisCellType.L, TetrisCellType.L, TetrisCellType.L, TetrisCellType.L],
+  [TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.L],
+  [TetrisCellShape.L, TetrisCellShape.L, TetrisCellShape.L, TetrisCellShape.L],
 ];
 export const TetrisCellL3 = [
-  [TetrisCellType.L, TetrisCellType.L],
-  [TetrisCellType.E, TetrisCellType.L],
-  [TetrisCellType.E, TetrisCellType.L],
-  [TetrisCellType.E, TetrisCellType.L],
+  [TetrisCellShape.L, TetrisCellShape.L],
+  [TetrisCellShape.E, TetrisCellShape.L],
+  [TetrisCellShape.E, TetrisCellShape.L],
+  [TetrisCellShape.E, TetrisCellShape.L],
 ];
 export const TetrisCellL4 = [
-  [TetrisCellType.L, TetrisCellType.L, TetrisCellType.L, TetrisCellType.L],
-  [TetrisCellType.L, TetrisCellType.E, TetrisCellType.E, TetrisCellType.E],
+  [TetrisCellShape.L, TetrisCellShape.L, TetrisCellShape.L, TetrisCellShape.L],
+  [TetrisCellShape.L, TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E],
 ];
 export const TetrisCellO = [
-  [TetrisCellType.O, TetrisCellType.O],
-  [TetrisCellType.O, TetrisCellType.O],
+  [TetrisCellShape.O, TetrisCellShape.O],
+  [TetrisCellShape.O, TetrisCellShape.O],
 ];
 export const TetrisCellI1 = [
-  [TetrisCellType.I],
-  [TetrisCellType.I],
-  [TetrisCellType.I],
-  [TetrisCellType.I],
+  [TetrisCellShape.I],
+  [TetrisCellShape.I],
+  [TetrisCellShape.I],
+  [TetrisCellShape.I],
 ];
 export const TetrisCellI2 = [
-  [TetrisCellType.I, TetrisCellType.I, TetrisCellType.I, TetrisCellType.I],
+  [TetrisCellShape.I, TetrisCellShape.I, TetrisCellShape.I, TetrisCellShape.I],
 ];
 export const TetrisCellZ1 = [
-  [TetrisCellType.Z, TetrisCellType.Z, TetrisCellType.E],
-  [TetrisCellType.E, TetrisCellType.Z, TetrisCellType.Z],
+  [TetrisCellShape.Z, TetrisCellShape.Z, TetrisCellShape.E],
+  [TetrisCellShape.E, TetrisCellShape.Z, TetrisCellShape.Z],
 ];
 export const TetrisCellZ2 = [
-  [TetrisCellType.Z, TetrisCellType.E],
-  [TetrisCellType.Z, TetrisCellType.Z],
-  [TetrisCellType.E, TetrisCellType.Z],
+  [TetrisCellShape.Z, TetrisCellShape.E],
+  [TetrisCellShape.Z, TetrisCellShape.Z],
+  [TetrisCellShape.E, TetrisCellShape.Z],
 ];
 export const TetrisCellZ3 = [
-  [TetrisCellType.E, TetrisCellType.Z, TetrisCellType.Z],
-  [TetrisCellType.Z, TetrisCellType.Z, TetrisCellType.E],
+  [TetrisCellShape.E, TetrisCellShape.Z, TetrisCellShape.Z],
+  [TetrisCellShape.Z, TetrisCellShape.Z, TetrisCellShape.E],
 ];
 export const TetrisCellZ4 = [
-  [TetrisCellType.E, TetrisCellType.Z],
-  [TetrisCellType.Z, TetrisCellType.Z],
-  [TetrisCellType.Z, TetrisCellType.E],
+  [TetrisCellShape.E, TetrisCellShape.Z],
+  [TetrisCellShape.Z, TetrisCellShape.Z],
+  [TetrisCellShape.Z, TetrisCellShape.E],
 ];
-export const TetrisCellD = [[TetrisCellType.D]];
+export const TetrisCellD = [[TetrisCellShape.D]];
 export const TetrisCellEmpty = [
-  [TetrisCellType.E, TetrisCellType.E, TetrisCellType.E, TetrisCellType.E],
-  [TetrisCellType.E, TetrisCellType.E, TetrisCellType.E, TetrisCellType.E],
-  [TetrisCellType.E, TetrisCellType.E, TetrisCellType.E, TetrisCellType.E],
-  [TetrisCellType.E, TetrisCellType.E, TetrisCellType.E, TetrisCellType.E],
+  [TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E],
+  [TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E],
+  [TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E],
+  [TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E, TetrisCellShape.E],
 ];
 
 export interface TetrisCell {
+  shape: TetrisCellShape;
   type: TetrisCellType;
-  type2: TetrisCellType2;
 }
