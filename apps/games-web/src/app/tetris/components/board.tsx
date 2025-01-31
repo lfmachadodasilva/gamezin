@@ -1,34 +1,24 @@
 import { TetrisCellColor } from '../models/cell';
 import { useTetrisBoard } from '../providers/board';
-import { Next } from './next';
 
-export const Board = () => {
-  const { board, setPause, restart } = useTetrisBoard();
-
-  const handlePause = () => {
-    setPause((pause) => !pause);
-  };
+export const TetrisBoardBoard = () => {
+  const { board } = useTetrisBoard();
 
   return (
-    <>
-      <button onClick={handlePause}>Pause</button>
-      <button onClick={restart}>Restart</button>
-      <br></br>
-      <br></br>
-
+    <div>
       {board?.map((rows, indexRow) => (
         <div key={`board-row-${indexRow}`} style={{ display: 'flex' }}>
           {rows.map((cell, indexCol) => (
             <div
               key={`board-${indexRow}-${indexCol}-${cell.shape}`}
               style={{
-                borderTop: indexRow === 0 ? '1px solid black' : 'none',
-                borderBottom: '1px solid black',
-                borderLeft: indexCol === 0 ? '1px solid black' : 'none',
-                borderRight: '1px solid black',
+                borderTop: indexRow === 0 ? '1px solid var(--border-color-light)' : 'none',
+                borderBottom: '1px solid var(--border-color-light)',
+                borderLeft: indexCol === 0 ? '1px solid var(--border-color-light)' : 'none',
+                borderRight: '1px solid var(--border-color-light)',
                 backgroundColor: TetrisCellColor[cell.shape],
-                width: '20px',
-                height: '20px',
+                minWidth: '20px',
+                minHeight: '20px',
               }}
             >
               {/* {cell.type} */}
@@ -36,7 +26,6 @@ export const Board = () => {
           ))}
         </div>
       ))}
-      <Next />
-    </>
+    </div>
   );
 };

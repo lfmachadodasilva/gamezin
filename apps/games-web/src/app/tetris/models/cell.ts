@@ -19,8 +19,8 @@ export const TetrisCellColor = {
   I: 'red',
   Z: 'purple',
   D: 'black',
-  E: 'white',
-  empty: 'white',
+  E: 'inherit',
+  empty: 'inherit',
 };
 
 export const TetrisCellL1 = [

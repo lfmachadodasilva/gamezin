@@ -1,10 +1,10 @@
-import { Board } from './components/board';
+import { TetrisPage } from './components/page';
 import { TetrisBoardProvider } from './providers/board';
 
-export const TetrisPage = () => {
+export const Tetris = () => {
   return (
     <TetrisBoardProvider>
-      <Board />
+      <TetrisPage />
     </TetrisBoardProvider>
   );
 };
