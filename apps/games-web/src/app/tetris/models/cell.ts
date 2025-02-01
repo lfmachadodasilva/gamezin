@@ -14,13 +14,13 @@ export enum TetrisCellType {
 }
 
 export const TetrisCellColor = {
-  L: 'blue',
-  O: 'green',
-  I: 'red',
-  Z: 'purple',
-  D: 'black',
-  E: 'inherit',
-  empty: 'inherit',
+  L: 'var(--shape-color-L)',
+  O: 'var(--shape-color-O)',
+  I: 'var(--shape-color-I)',
+  Z: 'var(--shape-color-Z)',
+  D: 'var(--shape-color-D)',
+  E: 'var(--shape-color-empty)',
+  empty: 'var(--shape-color-empty)',
 };
 
 export const TetrisCellL1 = [

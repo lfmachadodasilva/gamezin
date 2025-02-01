@@ -15,7 +15,15 @@ import { applyTetrominoe, createRandomTetrominoe, Tetrominoe } from '../models/t
 import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
 import { populateArray } from '../utils/common';
 import { useInterval } from '../hooks/useInterval';
-import { colid, dropping, fixedAll, gameOver, moveToLeft, moveToRight } from '../utils/boardFuncs';
+import {
+  colid,
+  dropping,
+  fixedAll,
+  gameOver,
+  moveToLeft,
+  moveToRight,
+  processPoint,
+} from '../utils/boardFuncs';
 
 const TetrisBoardContext = createContext<{
   board?: TetrisBoard;
@@ -23,6 +31,7 @@ const TetrisBoardContext = createContext<{
   setPause: React.Dispatch<React.SetStateAction<boolean>>;
   next?: Tetrominoe | null;
   restart: () => void;
+  points: number;
 }>({
   pause: false,
   setPause: () => {
@@ -31,9 +40,11 @@ const TetrisBoardContext = createContext<{
   restart: () => {
     /* no-op */
   },
+  points: 0,
 });
 
 export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
+  const [points, setPoints] = useState<number>(0);
   const touchStartPosition = useRef<{ x: number; y: number } | null>(null);
   const [board, setBoard] = useState<TetrisBoard>(
     populateArray(BOARD_ROWS, BOARD_COLUMNS, {
@@ -91,6 +102,9 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
         board = applyTetrominoe(board, shape.current, undefined, TetrisCellType.Temp);
       }
 
+      const currentPoint = processPoint(board);
+      setPoints((value) => value + currentPoint);
+
       return board;
     });
   }, [shape]);
@@ -116,6 +130,7 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   }, GAME_TIME);
 
   const handleRestart = useCallback(() => {
+    setPoints(0);
     setBoard(
       populateArray(BOARD_ROWS, BOARD_COLUMNS, {
         shape: TetrisCellShape.E,
@@ -182,7 +197,9 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <span onTouchMove={handleTouchMove} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-      <TetrisBoardContext.Provider value={{ board, pause, setPause, next, restart: handleRestart }}>
+      <TetrisBoardContext.Provider
+        value={{ board, pause, setPause, next, restart: handleRestart, points }}
+      >
         {children}
       </TetrisBoardContext.Provider>
     </span>

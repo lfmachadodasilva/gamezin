@@ -1,6 +1,6 @@
 import { BOARD_COLUMNS, BOARD_ROWS } from './constants';
 import { TetrisBoard } from '../models/board';
-import { TetrisCellShape, TetrisCellType } from '../models/cell';
+import { TetrisCell, TetrisCellShape, TetrisCellType } from '../models/cell';
 import { createTetrominoe, Tetrominoe } from '../models/tetrominoe';
 
 export const fixedAll = (board: TetrisBoard): TetrisBoard =>
@@ -49,6 +49,37 @@ export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe)
   }
 
   return false;
+};
+
+export const processPoint = (board: TetrisBoard): number => {
+  const colsAffected = [];
+  for (let rowIndex = 0; rowIndex < board.length; rowIndex++) {
+    if (
+      board[rowIndex].every(
+        (col) => col.type === TetrisCellType.Fixed && col.shape !== TetrisCellShape.E,
+      )
+    ) {
+      colsAffected.push(rowIndex);
+    }
+  }
+
+  const value: TetrisCell = {
+    shape: TetrisCellShape.E,
+    type: TetrisCellType.Empty,
+  };
+
+  if (colsAffected.length > 0) {
+    const emptyRow = Array.from({ length: BOARD_COLUMNS }, () => value);
+
+    for (let i = 0; i < colsAffected.length; i++) {
+      board.splice(colsAffected[i], 1);
+      board.unshift(emptyRow);
+    }
+
+    return colsAffected.length * colsAffected.length;
+  }
+
+  return 0;
 };
 
 export const gameOver = (shape: Tetrominoe): boolean =>
