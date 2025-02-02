@@ -1,8 +1,6 @@
 import {
   createContext,
   ReactNode,
-  TouchEventHandler,
-  use,
   useCallback,
   useContext,
   useEffect,
