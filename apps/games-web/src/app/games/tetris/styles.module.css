@@ -1,3 +1,15 @@
+:root {
+  --board-rows: 12;
+  --board-cols: 24;
+
+  --shape-color-empty: inherit;
+  --shape-color-L: blue;
+  --shape-color-O: green;
+  --shape-color-I: red;
+  --shape-color-Z: purple;
+  --shape-color-D: gray;
+}
+
 .tetrisPage {
   display: grid;
   column-gap: 10px;
@@ -22,8 +34,8 @@
   border-bottom: 1px solid var(--border-color-light);
   border-right: 1px solid var(--border-color-light);
 
-  width: calc(min(100%, 500px) / 12);
-  height: calc(min(100%, 500px) / 24);
+  width: calc(min(100%, 500px) / var(--board-cols));
+  height: calc(min(100%, 500px) / var(--board-rows));
 
   aspect-ratio: 1 / 1;
 }

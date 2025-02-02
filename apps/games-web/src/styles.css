@@ -2,16 +2,12 @@
 
 :root {
   --border-color-light: #7b7a7a;
-
-  --shape-color-empty: inherit;
-  --shape-color-L: blue;
-  --shape-color-O: green;
-  --shape-color-I: red;
-  --shape-color-Z: purple;
-  --shape-color-D: gray;
 }
 
 body {
   background-color: #181a1b;
   color: #e8e6e3;
+}
+
+#root {
 }

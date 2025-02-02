@@ -137,6 +137,7 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
     );
     setShape({ previous: null, current: createRandomTetrominoe() });
     setNext(createRandomTetrominoe());
+    setPause(false);
   }, []);
 
   const handleTouchStart = (event: React.TouchEvent) => {
