@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
-    "start": "nx serve games-web"
+    "start": "nx serve games-web",
+    "prettier:check": "prettier . --check",
+    "prettier:fix": "prettier . --write"
   },
   "private": true,
   "dependencies": {
@@ -43,7 +45,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jsdom": "26.0.0",
     "nx": "20.4.0",
-    "prettier": "3.4.2",
+    "prettier": "^3.4.2",
     "react-router-dom": "^7.1.5",
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
