@@ -3,19 +3,16 @@ import { TetrisMenu } from './components/menu';
 import { TetrisNext } from './components/next';
 import { TetrisScore } from './components/score';
 import { TetrisBoardProvider } from './providers/board';
+import styles from './styles.module.css';
 
 export const Tetris = () => {
   return (
     <TetrisBoardProvider>
-      <div style={{ overflow: 'hidden' }}>
+      <div className={styles.tetrisPage}>
+        <TetrisBoardBoard />
         <TetrisMenu />
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-          <TetrisBoardBoard />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <TetrisScore />
-            <TetrisNext />
-          </div>
-        </div>
+        <TetrisNext />
+        <TetrisScore />
       </div>
     </TetrisBoardProvider>
   );
