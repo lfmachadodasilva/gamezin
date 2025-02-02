@@ -1,10 +1,12 @@
 import { useTetrisBoard } from '../providers/board';
 
-export const TetrisPoints = () => {
+import styles from '../styles.module.css';
+
+export const TetrisScore = () => {
   const { points } = useTetrisBoard();
 
   return (
-    <div style={{ border: '1px solid var(--border-color-light)', padding: '5px', width: '100%' }}>
+    <div className={styles.score}>
       <p>Points:</p>
       <p>{points}</p>
     </div>

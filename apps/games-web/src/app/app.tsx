@@ -1,5 +1,3 @@
-// Uncomment this line to use CSS modules
-// import styles from './app.module.css';
 import { HomePage } from './home';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Tetris } from './tetris';

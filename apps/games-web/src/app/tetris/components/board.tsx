@@ -1,24 +1,21 @@
 import { TetrisCellColor } from '../models/cell';
 import { useTetrisBoard } from '../providers/board';
 
+import styles from '../styles.module.css';
+
 export const TetrisBoardBoard = () => {
   const { board } = useTetrisBoard();
 
   return (
-    <div>
+    <div className={styles.board}>
       {board?.map((rows, indexRow) => (
-        <div key={`board-row-${indexRow}`} style={{ display: 'flex' }}>
+        <div key={`board-row-${indexRow}`} className={styles.boardRow}>
           {rows.map((cell, indexCol) => (
             <div
               key={`board-${indexRow}-${indexCol}-${cell.shape}`}
+              className={`${styles.boardShape}`}
               style={{
-                borderTop: indexRow === 0 ? '1px solid var(--border-color-light)' : 'none',
-                borderBottom: '1px solid var(--border-color-light)',
-                borderLeft: indexCol === 0 ? '1px solid var(--border-color-light)' : 'none',
-                borderRight: '1px solid var(--border-color-light)',
                 backgroundColor: TetrisCellColor[cell.shape],
-                minWidth: '20px',
-                minHeight: '20px',
               }}
             >
               {/* {cell.type} */}

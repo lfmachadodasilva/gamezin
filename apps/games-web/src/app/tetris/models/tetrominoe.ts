@@ -1,39 +1,39 @@
-import { deepClone, getRandomEnumValue, randomIntFromInterval } from '../utils/common';
+import { deepClone, getRandomEnumValue, randomIntFromInterval } from '../../shared/common';
 import { TetrisBoard } from './board';
 import {
-  TetrisCellShape,
-  TetrisCellL1,
-  TetrisCellL2,
-  TetrisCellL3,
-  TetrisCellL4,
-  TetrisCellType,
-  TetrisCellO,
-  TetrisCellI1,
-  TetrisCellI2,
-  TetrisCellZ1,
-  TetrisCellZ2,
-  TetrisCellZ3,
-  TetrisCellZ4,
-  TetrisCellD,
+  TetrisShape,
+  TetrisShapeL1,
+  TetrisShapeL2,
+  TetrisShapeL3,
+  TetrisShapeL4,
+  TetrisShapeType,
+  TetrisShapeO,
+  TetrisShapeI1,
+  TetrisShapeI2,
+  TetrisShapeZ1,
+  TetrisShapeZ2,
+  TetrisShapeZ3,
+  TetrisShapeZ4,
+  TetrisShapeD,
 } from './cell';
 
 export interface Tetrominoe {
-  position: { row: number; col: number; type: TetrisCellShape }[][];
-  type: TetrisCellShape;
+  position: { row: number; col: number; type: TetrisShape }[][];
+  type: TetrisShape;
   format: number;
 }
 
 export const applyTetrominoe = (
   board: TetrisBoard,
   tetrominoe: Tetrominoe,
-  type?: TetrisCellShape,
-  type2?: TetrisCellType,
+  type?: TetrisShape,
+  type2?: TetrisShapeType,
 ) => {
   const boardCopy: TetrisBoard = deepClone(board);
 
   tetrominoe.position.forEach((row) => {
     row.forEach((cell) => {
-      if (cell.type !== TetrisCellShape.E) {
+      if (cell.type !== TetrisShape.E) {
         const boardRow = boardCopy[cell.row];
         if (boardRow) {
           const boardCol = boardRow[cell.col];
@@ -49,41 +49,41 @@ export const applyTetrominoe = (
 };
 
 export const createTetrominoe = (
-  type: TetrisCellShape,
+  type: TetrisShape,
   format: number,
   from: { row: number; col: number },
 ) => {
-  let cell: TetrisCellShape[][] = [];
-  if (type === TetrisCellShape.L) {
+  let cell: TetrisShape[][] = [];
+  if (type === TetrisShape.L) {
     if (format === 1) {
-      cell = TetrisCellL1;
+      cell = TetrisShapeL1;
     } else if (format === 2) {
-      cell = TetrisCellL2;
+      cell = TetrisShapeL2;
     } else if (format === 3) {
-      cell = TetrisCellL3;
+      cell = TetrisShapeL3;
     } else if (format === 4) {
-      cell = TetrisCellL4;
+      cell = TetrisShapeL4;
     }
-  } else if (type === TetrisCellShape.O) {
-    cell = TetrisCellO;
-  } else if (type === TetrisCellShape.I) {
+  } else if (type === TetrisShape.O) {
+    cell = TetrisShapeO;
+  } else if (type === TetrisShape.I) {
     if (format === 1) {
-      cell = TetrisCellI1;
+      cell = TetrisShapeI1;
     } else {
-      cell = TetrisCellI2;
+      cell = TetrisShapeI2;
     }
-  } else if (type === TetrisCellShape.Z) {
+  } else if (type === TetrisShape.Z) {
     if (format === 1) {
-      cell = TetrisCellZ1;
+      cell = TetrisShapeZ1;
     } else if (format === 2) {
-      cell = TetrisCellZ2;
+      cell = TetrisShapeZ2;
     } else if (format === 3) {
-      cell = TetrisCellZ3;
+      cell = TetrisShapeZ3;
     } else if (format === 4) {
-      cell = TetrisCellZ4;
+      cell = TetrisShapeZ4;
     }
-  } else if (type === TetrisCellShape.D) {
-    cell = TetrisCellD;
+  } else if (type === TetrisShape.D) {
+    cell = TetrisShapeD;
   }
 
   return {
@@ -100,7 +100,7 @@ export const createTetrominoe = (
 };
 
 export const createRandomTetrominoe = () => {
-  const type = getRandomEnumValue(TetrisCellShape, TetrisCellShape.E);
+  const type = getRandomEnumValue(TetrisShape, TetrisShape.E);
   const format = randomIntFromInterval(1, 4);
   const from = { row: -4, col: 4 };
 

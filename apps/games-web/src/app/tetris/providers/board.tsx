@@ -10,11 +10,11 @@ import {
   useState,
 } from 'react';
 import { TetrisBoard } from '../models/board';
-import { TetrisCellShape, TetrisCellType } from '../models/cell';
+import { TetrisShape, TetrisShapeType } from '../models/cell';
 import { applyTetrominoe, createRandomTetrominoe, Tetrominoe } from '../models/tetrominoe';
 import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
-import { populateArray } from '../utils/common';
-import { useInterval } from '../hooks/useInterval';
+import { populateArray } from '../../shared/common';
+import { useInterval } from '../../shared/hooks/useInterval';
 import {
   colid,
   dropping,
@@ -48,8 +48,8 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
   const touchStartPosition = useRef<{ x: number; y: number } | null>(null);
   const [board, setBoard] = useState<TetrisBoard>(
     populateArray(BOARD_ROWS, BOARD_COLUMNS, {
-      shape: TetrisCellShape.E,
-      type: TetrisCellType.Empty,
+      shape: TetrisShape.E,
+      type: TetrisShapeType.Empty,
     }),
   );
   const [shape, setShape] = useState<{
@@ -95,11 +95,11 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
 
     setBoard((board) => {
       if (shape.previous) {
-        board = applyTetrominoe(board, shape.previous, TetrisCellShape.E);
+        board = applyTetrominoe(board, shape.previous, TetrisShape.E);
       }
 
       if (shape.current) {
-        board = applyTetrominoe(board, shape.current, undefined, TetrisCellType.Temp);
+        board = applyTetrominoe(board, shape.current, undefined, TetrisShapeType.Temp);
       }
 
       const currentPoint = processPoint(board);
@@ -133,8 +133,8 @@ export const TetrisBoardProvider = ({ children }: { children: ReactNode }) => {
     setPoints(0);
     setBoard(
       populateArray(BOARD_ROWS, BOARD_COLUMNS, {
-        shape: TetrisCellShape.E,
-        type: TetrisCellType.Empty,
+        shape: TetrisShape.E,
+        type: TetrisShapeType.Empty,
       }),
     );
     setShape({ previous: null, current: createRandomTetrominoe() });

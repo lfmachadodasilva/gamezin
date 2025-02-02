@@ -1,0 +1,39 @@
+.board {
+  border-top: 1px solid var(--border-color-light);
+  border-left: 1px solid var(--border-color-light);
+}
+.boardRow {
+  display: flex;
+}
+.boardShape {
+  border-top: none;
+  border-left: none;
+  border-bottom: 1px solid var(--border-color-light);
+  border-right: 1px solid var(--border-color-light);
+
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.menu {
+  display: flex;
+  gap: 10px;
+  margin: 5px;
+  margin-left: 0;
+}
+
+.nextShape {
+  border: 1px solid var(--border-color-light);
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100px;
+}
+
+.score {
+  border: 1px solid var(--border-color-light);
+  padding: 5px;
+  width: 100%;
+}

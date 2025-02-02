@@ -1,5 +1,7 @@
 import { useTetrisBoard } from '../providers/board';
 
+import styles from '../styles.module.css';
+
 export const TetrisMenu = () => {
   const { setPause, restart } = useTetrisBoard();
 
@@ -8,7 +10,7 @@ export const TetrisMenu = () => {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '10px', margin: '5px', marginLeft: 0 }}>
+    <div className={styles.menu}>
       <button onClick={handlePause}>Pause</button>
       <button onClick={restart}>Restart</button>
     </div>

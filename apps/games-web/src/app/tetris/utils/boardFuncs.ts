@@ -1,13 +1,13 @@
 import { BOARD_COLUMNS, BOARD_ROWS } from './constants';
 import { TetrisBoard } from '../models/board';
-import { TetrisCell, TetrisCellShape, TetrisCellType } from '../models/cell';
+import { TetrisCell, TetrisShape, TetrisShapeType } from '../models/cell';
 import { createTetrominoe, Tetrominoe } from '../models/tetrominoe';
 
 export const fixedAll = (board: TetrisBoard): TetrisBoard =>
   board.map((row) =>
     row.map((col) => {
-      if (col.type === TetrisCellType.Temp) {
-        col.type = TetrisCellType.Fixed;
+      if (col.type === TetrisShapeType.Temp) {
+        col.type = TetrisShapeType.Fixed;
       }
       return col;
     }),
@@ -18,7 +18,7 @@ export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe)
     for (let colIndex = 0; colIndex < next.position[rowIndex].length; colIndex++) {
       const cell = next.position[rowIndex][colIndex];
 
-      if (cell.type === TetrisCellShape.E) {
+      if (cell.type === TetrisShape.E) {
         // empty space
         continue;
       }
@@ -37,11 +37,7 @@ export const colid = (board: TetrisBoard, current: Tetrominoe, next: Tetrominoe)
       if (cellRow) {
         const cellCol = cellRow[cell.col];
 
-        if (
-          cellCol &&
-          cellCol.shape !== TetrisCellShape.E &&
-          cellCol.type === TetrisCellType.Fixed
-        ) {
+        if (cellCol && cellCol.shape !== TetrisShape.E && cellCol.type === TetrisShapeType.Fixed) {
           return true;
         }
       }
@@ -56,7 +52,7 @@ export const processPoint = (board: TetrisBoard): number => {
   for (let rowIndex = 0; rowIndex < board.length; rowIndex++) {
     if (
       board[rowIndex].every(
-        (col) => col.type === TetrisCellType.Fixed && col.shape !== TetrisCellShape.E,
+        (col) => col.type === TetrisShapeType.Fixed && col.shape !== TetrisShape.E,
       )
     ) {
       colsAffected.push(rowIndex);
@@ -64,8 +60,8 @@ export const processPoint = (board: TetrisBoard): number => {
   }
 
   const value: TetrisCell = {
-    shape: TetrisCellShape.E,
-    type: TetrisCellType.Empty,
+    shape: TetrisShape.E,
+    type: TetrisShapeType.Empty,
   };
 
   if (colsAffected.length > 0) {
