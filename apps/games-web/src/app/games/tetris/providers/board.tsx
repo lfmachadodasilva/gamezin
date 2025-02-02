@@ -7,12 +7,11 @@ import {
   useRef,
   useState,
 } from 'react';
+import { populateArray } from '../../../shared/common';
+import { useInterval } from '../../../shared/hooks/useInterval';
 import { TetrisBoard } from '../models/board';
 import { TetrisShape, TetrisShapeType } from '../models/cell';
 import { applyTetrominoe, createRandomTetrominoe, Tetrominoe } from '../models/tetrominoe';
-import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
-import { populateArray } from '../../shared/common';
-import { useInterval } from '../../shared/hooks/useInterval';
 import {
   colid,
   dropping,
@@ -22,6 +21,7 @@ import {
   moveToRight,
   processPoint,
 } from '../utils/boardFuncs';
+import { BOARD_COLUMNS, BOARD_ROWS, GAME_TIME } from '../utils/constants';
 
 const TetrisBoardContext = createContext<{
   board?: TetrisBoard;

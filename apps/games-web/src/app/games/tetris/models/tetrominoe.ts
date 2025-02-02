@@ -1,20 +1,20 @@
-import { deepClone, getRandomEnumValue, randomIntFromInterval } from '../../shared/common';
+import { deepClone, getRandomEnumValue, randomIntFromInterval } from '../../../shared/common';
 import { TetrisBoard } from './board';
 import {
   TetrisShape,
+  TetrisShapeD,
+  TetrisShapeI1,
+  TetrisShapeI2,
   TetrisShapeL1,
   TetrisShapeL2,
   TetrisShapeL3,
   TetrisShapeL4,
-  TetrisShapeType,
   TetrisShapeO,
-  TetrisShapeI1,
-  TetrisShapeI2,
+  TetrisShapeType,
   TetrisShapeZ1,
   TetrisShapeZ2,
   TetrisShapeZ3,
   TetrisShapeZ4,
-  TetrisShapeD,
 } from './cell';
 
 export interface Tetrominoe {

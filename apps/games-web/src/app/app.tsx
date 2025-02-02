@@ -1,7 +1,7 @@
-import { HomePage } from './home';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Tetris } from './tetris';
-import { CheckersPage } from './checkers';
+import { CheckersPage } from './games/checkers';
+import { Tetris } from './games/tetris';
+import { HomePage } from './home';
 import { NotFoundPage } from './notFound';
 
 import { Layout } from './layout';
