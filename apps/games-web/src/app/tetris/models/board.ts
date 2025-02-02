@@ -1,3 +1,3 @@
-import { TetrisShape } from './cell';
+import { TetrisCell } from './cell';
 
-export type TetrisBoard = TetrisShape[][];
+export type TetrisBoard = TetrisCell[][];
