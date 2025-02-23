@@ -1,7 +1,8 @@
-import { BOARD_COLUMNS, BOARD_ROWS } from './constants';
+import { randomIntFromInterval } from '../../../shared/common';
 import { TetrisBoard } from '../models/board';
-import { TetrisCell, TetrisShape, TetrisShapeType } from '../models/cell';
+import { TetrisCell, TetrisShape, TetrisShapeI, TetrisShapeType } from '../models/cell';
 import { createTetrominoe, Tetrominoe } from '../models/tetrominoe';
+import { BOARD_COLUMNS, BOARD_ROWS } from './constants';
 
 export const fixedAll = (board: TetrisBoard): TetrisBoard =>
   board.map((row) =>
@@ -98,3 +99,15 @@ export const moveToLeft = (shape: Tetrominoe): Tetrominoe =>
     row: shape.position[0][0].row,
     col: shape.position[0][0].col - 1,
   });
+
+export const changeFormat = (shape: Tetrominoe): Tetrominoe => {
+  if (shape.type === TetrisShape.I) {
+    const tetrisShapeI = TetrisShapeI.splice(shape.format, 1);
+    const index = randomIntFromInterval(0, tetrisShapeI.length - 1);
+    return {
+      ...shape,
+      format: 1,
+    };
+  }
+  return shape;
+};
