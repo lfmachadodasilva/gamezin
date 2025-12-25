@@ -2798,7 +2798,7 @@ __metadata:
     "@swc-node/register": "npm:1.11.1"
     "@swc/cli": "npm:0.7.9"
     "@swc/core": "npm:1.15.7"
-    "@swc/helpers": "npm:0.5.17"
+    "@swc/helpers": "npm:0.5.18"
     "@testing-library/react": "npm:16.3.1"
     "@types/jest": "npm:30.0.0"
     "@types/node": "npm:24.10.4"
@@ -5458,7 +5458,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:0.5.17, @swc/helpers@npm:^0.5.17":
+"@swc/helpers@npm:0.5.18":
+  version: 0.5.18
+  resolution: "@swc/helpers@npm:0.5.18"
+  dependencies:
+    tslib: "npm:^2.8.0"
+  checksum: 10c0/cb32d72e32f775c30287bffbcf61c89ea3a963608cb3a4a675a3f9af545b8b3ab0bc9930432a5520a7307daaa87538158e253584ae1cf39f3e7e6e83408a2d51
+  languageName: node
+  linkType: hard
+
+"@swc/helpers@npm:^0.5.17":
   version: 0.5.17
   resolution: "@swc/helpers@npm:0.5.17"
   dependencies:
